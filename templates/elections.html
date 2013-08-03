@@ -2,12 +2,11 @@
 {% block title %} Democracy- Elections{% endblock %}
 {% block content %}
 
-<form  id="zip" action="{{url_for('dashboard')}}" method="post">
+<form  id="contests">
   <select multiple class="form-control" id="elections" name="elections">
     {% for election in elections %}
     <option>
-      <label>{{ election.name }}</label>
-      <input type="text" hidden value="{{ election.id }}" name="election_id"></label>
+      <label>{{ election.office }}</label>
     </option>
     {% endfor %}
   </select>

@@ -35,7 +35,7 @@ class Elections(object):
 
     def get_voter_info(self, election_id, address):
         """
-        Looks up information for the `election_id` provided relevant to a voter 
+        Looks up information for the `election_id` provided relevant to a voter
         based on the voter's registered `address`.
         """
         body = {'address': address}
@@ -43,7 +43,7 @@ class Elections(object):
             electionId=election_id,
             body=body
         )
-        
+
         try:
             response = request.execute()
         except URLError:

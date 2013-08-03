@@ -28,28 +28,30 @@ def index():
     e = Elections()
 
     elections = e.get_elections()
-    context = elections
+    context = {'elections': elections}
 
-    return render_template("index.html"), context
+    return render_template("index.html", **context)
 
-@app.route("/contests")
-def contests():
+@app.route("/elections", methods = ["POST"])
+def elections():
     """
     Uses the election id and address provided to show user a list of contests
     consisting of candidates and information about them.
     """
     e = Elections()
 
-    election_id = request.get('election_id')
-    address = request.get('address')
-    contests = e.get_voter_info(election_id, address)
-    context = contests
-    
-    return render_template("elections.html", context)
+    election_id = request.values['elections']
+    address = request.values['street_address']
+    zipcode = request.values['zipcode']
+    s = address + ' ' + zipcode
+    contests = e.get_voter_info(election_id, s)
+    context = {'elections': contests}
+
+    return render_template("elections.html", **context)
 
 @app.route("/dashboard")
 def dashboard():
-    issues = request.get('issues', '')
+    issues = request.args.get('issues', '')
 
     return render_template("dashboard.html")
 

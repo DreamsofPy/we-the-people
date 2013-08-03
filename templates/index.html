@@ -3,7 +3,14 @@
 {% block content %}
 <h1>iPyDemocracy</h1>
 <p>Because every vote counts</p>
-<form class="form-inline" id="zip" action="{{url_for('elections')}}" method="post">
+<form class="form" id="zip" action="{{url_for('elections')}}" method="post">
+  <select class="form-control" id="elections" name="elections">
+    {% for e in elections %}
+    <option value="{{ e.id }}" name="election_id">
+      <label>{{ e.name }}</label>
+    </option>
+    {% endfor %}
+  </select>
 
 	<label>Enter your address</label><br>
   <input type="text" placeholder="Street Address" id="street" required name="street_address">
