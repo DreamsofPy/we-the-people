@@ -1,5 +1,13 @@
 {% extends "template.html" %}
-{% block title %} - Home{% endblock %}
+{% block title %} Democracy- Home{% endblock %}
 {% block content %}
-<h1>Welcome!</h1>
+<h1>iPyDemocracy</h1>
+<p>Because every vote counts</p>
+<form class="form-inline" id="zip" action="{{url_for('elections')}}" method="post">
+
+	<label>Enter your address</label><br>
+  <input type="text" placeholder="Street Address" id="street" required name="street_address">
+	<input type="text" placeholder="Zip code" id="zipcode" required length="5" name="zipcode"> <br> <br>
+	<button type="Submit" class="btn btn-primary">Find</button>
+</form>
 {% endblock %}
