@@ -2,8 +2,7 @@
 # Imports
 #------------------------------------------------------------------------------#
 
-from flask import * # do not use '*'; actually input the dependencies
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask import (Flask, render_template)
 import logging
 from logging import Formatter, FileHandler
 
@@ -15,25 +14,6 @@ app = Flask(__name__)
 app.config.from_object('config')
 #db = SQLAlchemy(app)
 
-# Automatically tear down SQLAlchemy
-'''
-@app.teardown_request
-def shutdown_session(exception=None):
-    db_session.remove()
-'''
-
-# Login required decorator
-'''
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-'''
 #------------------------------------------------------------------------------#
 # Controllers
 #------------------------------------------------------------------------------#
@@ -41,15 +21,26 @@ def login_required(test):
 @app.route("/")
 def index():
     return render_template("index.html")
-'''
-@app.route("/login")
-def login():
-    return render_template("login.html")
 
-@app.route("/register")
+@app.route("/elections")
+def login():
+    return render_template("elections.html")
+
+@app.route("/dashboard")
 def register():
-    return render_template("register.html")
-'''
+    return render_template("dashboard.html")
+
+@app.route("/candidate/<cadidate_name>")
+def register():
+    return render_template("candidate.html")
+
+@app.route("/choose")
+def register():
+    return render_template("choose.html")
+
+@app.route("/compare")
+def register():
+    return render_template("compare.html")
 
 # Error Handlers
 
@@ -61,15 +52,6 @@ def internal_error(error):
 @app.errorhandler(404)
 def internal_error(error):
     return render_template('404.html'), 404
-
-if not app.debug:
-    file_handler = FileHandler('error.log')
-    file_handler.setFormatter(Formatter('%(asctime)s %(levelname)s: %(message)s '
-    '[in %(pathname)s:%(lineno)d]'))
-    app.logger.setLevel(logging.INFO)
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-    app.logger.info('errors')
 
 #------------------------------------------------------------------------------#
 # Launch
