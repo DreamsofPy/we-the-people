@@ -49,12 +49,12 @@ def elections():
 
     return render_template("elections.html", **context)
 
-@app.route("/office", methods=["GET"])
-def office():
+@app.route("/api/candidates")
+def api_candidates():
     """
     Returns candidates for the office by `office_name`
 
-    Example: http://localhost:4567/office?address=NJ+07302&election_id=4000&office_name=U.S.+Senate
+    Example: http://localhost:4567/api/candidates?address=NJ+07302&election_id=4000&office_name=U.S.+Senate
     """
     e = Elections()
 
@@ -71,6 +71,36 @@ def office():
             break
 
     return jsonify(**candidates)
+
+@app.route("/api/elections")
+def api_elections():
+    """
+    Returns elections
+    """
+    e = Elections()
+    return jsonify(**{'elections': e.get_elections()})
+
+@app.route("/api/offices")
+def api_offices():
+    """
+    Returns offices by election and address
+
+    Example: http://localhost:4567/api/offices?address=NJ+07302&election_id=4000
+    """
+    e = Elections()
+
+    election_id = request.args.get('election_id')
+    address = request.args.get('address')
+    contests = e.get_voter_info(election_id, address)
+
+    offices = {'offices': []}
+
+    for contest in contests:
+        office = contest.get('office')
+        if office:
+            offices['offices'].append(office)
+
+    return jsonify(**offices)
 
 @app.route("/dashboard")
 def dashboard():
