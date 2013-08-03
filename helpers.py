@@ -1,10 +1,10 @@
 import requests
+import urllib
 
 from apiclient.discovery import build
 from urllib2 import URLError
 
 API_KEY = 'AIzaSyDF8CmHI9LAKDuT7pOg3E-j9fsDnBWZ7A0'
-
 
 class Elections(object):
     """
@@ -71,3 +71,37 @@ def bing_query(query, issues = None, top=6):
         result[issue] = response_json.get('d', 'No response').get('results', 'No response')
 
     return result
+
+
+def tweets(tweets=None):
+    # Test data
+    if not tweets:
+        tweets = ['I love barack obama', 'Obamas alright', 'I hate war', 
+                  'I am in love', 'I have a positive outlook on life']
+
+    endpoint = 'https://api.sentigem.com/external/get-sentiment?'
+    key = 'cec3b93e5e83066c4fff43a94282b3055h8nOLzo14VDwHJZ9UmaWC-AxpN0gBFb'
+
+    score = 0
+
+    for tweet in tweets:
+        text = {
+            'api-key': key,
+            'text': tweet
+        }
+        url = endpoint + urllib.urlencode(text)
+        response = requests.get(url)
+        response_json = response.json()
+
+        # Polarity can either be positive, neutral, or negative
+        polarity = response_json.get('polarity', 'neutral')
+
+        if polarity == 'positive':
+            score += 100
+        elif polarity == 'neutral':
+            score += 50
+
+        print polarity
+
+    score /= len(tweets)
+    return score
