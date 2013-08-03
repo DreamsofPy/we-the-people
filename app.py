@@ -32,7 +32,7 @@ def dashboard():
     return render_template("dashboard.html")
 
 @app.route("/candidate/<cadidate_name>", methods = ["POST"])
-def candidate(candidate_name, issue):
+def candidate(candidate_name):
     news = bing_query(candidate_name, issue)
     context = {'news': news}
     return render_template("candidate.html")
