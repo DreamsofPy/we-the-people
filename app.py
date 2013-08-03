@@ -2,7 +2,7 @@
 # Imports
 #------------------------------------------------------------------------------#
 
-from flask import (Flask, render_template, request)
+from flask import (Flask, jsonify, render_template, request)
 import logging
 from logging import Formatter, FileHandler
 from helpers import bing_query, Elections
@@ -48,6 +48,29 @@ def elections():
     context = {'elections': contests}
 
     return render_template("elections.html", **context)
+
+@app.route("/office", methods=["GET"])
+def office():
+    """
+    Returns candidates for the office by `office_name`
+
+    Example: http://localhost:4567/office?address=NJ+07302&election_id=4000&office_name=U.S.+Senate
+    """
+    e = Elections()
+
+    election_id = request.args.get('election_id')
+    address = request.args.get('address')
+    office_name = request.args.get('office_name')
+    contests = e.get_voter_info(election_id, address)
+
+    candidates = {'candidates': contests}
+
+    for contest in contests:
+        if contest.get('office', 'fail') == office_name:
+            candidates['candidates'] = contest.get('candidates')
+            break
+
+    return jsonify(**candidates)
 
 @app.route("/dashboard")
 def dashboard():
