@@ -2,10 +2,10 @@
 # Imports
 #------------------------------------------------------------------------------#
 
-from flask import (Flask, render_template)
+from flask import (Flask, render_template, request)
 import logging
 from logging import Formatter, FileHandler
-from .helpers import bing_query
+from helpers import bing_query, Elections
 
 #------------------------------------------------------------------------------#
 # App Config
@@ -21,14 +21,36 @@ app.config.from_object('config')
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    """
+    Asks user for address so we can give relevant voting information to them,
+    and displays a list of elections for the user to choose from.
+    """
+    e = Elections()
 
-@app.route("/elections")
-def login():
-    return render_template("elections.html")
+    elections = e.get_elections()
+    context = elections
+
+    return render_template("index.html"), context
+
+@app.route("/contests")
+def contests():
+    """
+    Uses the election id and address provided to show user a list of contests
+    consisting of candidates and information about them.
+    """
+    e = Elections()
+
+    election_id = request.get('election_id')
+    address = request.get('address')
+    contests = e.get_voter_info(election_id, address)
+    context = contests
+    
+    return render_template("elections.html", context)
 
 @app.route("/dashboard")
 def dashboard():
+    issues = request.get('issues', '')
+
     return render_template("dashboard.html")
 
 @app.route("/candidate/<cadidate_name>", methods = ["POST"])
