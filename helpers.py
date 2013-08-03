@@ -1,8 +1,19 @@
 import requests
 import urllib
 
+from twython import Twython
 from apiclient.discovery import build
 from urllib2 import URLError
+
+#TWITTER SEARCH
+
+APP_KEY = 'yR7sBQ93MLKpqhO4n3Sktg'
+APP_SECRET = 'CaUY0JmpsA9mGBNHWJlc14i7wgeJqhlHkX7hrCN0g'
+
+twitter = Twython(APP_KEY, APP_SECRET, oauth_version=2)
+ACCESS_TOKEN = twitter.obtain_access_token()
+
+twitter = Twython(APP_KEY, access_token=ACCESS_TOKEN)
 
 API_KEY = 'AIzaSyDF8CmHI9LAKDuT7pOg3E-j9fsDnBWZ7A0'
 
@@ -72,7 +83,6 @@ def bing_query(query, issues = None, top=6):
 
     return result
 
-
 def tweets(tweets=None):
     # Test data
     if not tweets:
@@ -105,3 +115,10 @@ def tweets(tweets=None):
 
     score /= len(tweets)
     return score
+
+def twitter_search(query):
+    result_status = []
+    result = twitter.search(q=query)
+    for i in result['statuses']:
+        result_status.append(i['text'].encode('utf-8'))
+    return result_status
