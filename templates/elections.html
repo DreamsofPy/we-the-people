@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+{% block title %} Democracy- Elections{% endblock %}
+{% block content %}
+
+<form  id="zip" action="{{url_for('dashboard')}}" method="post">
+  <select multiple class="form-control" id="elections" name="elections">
+    {% for election in elections %}
+    <option>
+      <label>{{ election.name }}</label>
+      <input type="text" hidden value="{{ election.id }}" name="election_id"></label>
+    </option>
+    {% endfor %}
+  </select>
+  <div class="checkbox-grid">
+    <label class="checkbox-inline">
+      <input type="checkbox" value="immigration">
+        Immigration
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="economy">
+        Economy
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="gun control">
+        Gun Control
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="abortion">
+        Abortion
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="energy">
+        Energy
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="gay rights">
+        Gay Rights
+    </label>
+  </div><br> <BR>
+  <button type="Submit" class="btn btn-primary">Find</button>
+</form>
+{% endblock %}
