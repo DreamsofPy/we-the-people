@@ -27,19 +27,19 @@ def login():
     return render_template("elections.html")
 
 @app.route("/dashboard")
-def register():
+def dashboard():
     return render_template("dashboard.html")
 
 @app.route("/candidate/<cadidate_name>")
-def register():
+def candidate():
     return render_template("candidate.html")
 
 @app.route("/choose")
-def register():
+def choose():
     return render_template("choose.html")
 
 @app.route("/compare")
-def register():
+def compare():
     return render_template("compare.html")
 
 # Error Handlers
