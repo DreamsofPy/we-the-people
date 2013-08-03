@@ -6,34 +6,38 @@
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/flat-ui.css">
+
   <style> body { padding-top: 70px; } </style>
   <link rel="stylesheet" href="/static/css/bootstrap-responsive.css">
   <script src="/static/js/libs/modernizr-2.0.6.min.js"></script>
+  <style type="text/css">
+    .checkbox-grid label {
+      display: block;
+      float: left;
+      width: 25%;
+    }
+  </style>
 </head>
 <body>
-    <div class="navbar navbar-fixed-top"> 
-      <div class="navbar-inner"> 
-        <div class="container"> 
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-            <span class="icon-bar"></span> 
-            <span class="icon-bar"></span> 
-            <span class="icon-bar"></span> 
-          </a> 
-          <a class="brand" href="/">App Name</a> 
-          <div class="nav-collapse"> 
-            <ul class="nav"> 
-              <li class="active"><a href="/">Home</a></li> 
-              <li><a href="#about">About</a></li> 
-              <li><a href="#contact">Contact</a></li>               
-            </ul> 
-            <ul class="nav pull-right">
-              <li><a href="#signup">Signup</a></li>
-              <li><a href="#logout">Login</a></li>
-              <li><a href="#logout">Logout</a></li>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">iPyDemocracy</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <!-- <li class="active"><a href="/">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li> -->
             </ul>
           </div>
-        </div> 
-      </div> 
+        </div>
+      </div>
     </div>
     <div id="container">
         <div id="main" role="main">
@@ -49,7 +53,7 @@
               {% endif %}
             {% endwith %}
             {% block content %}{% endblock %}
-          </div>       
+          </div>
         </div>
         <footer>
             {% block footer %}{% endblock %}
@@ -60,6 +64,7 @@
     <script defer src="/static/js/libs/bootstrap.min.js"></script>
     <script defer src="/static/js/plugins.js"></script>
     <script defer src="/static/js/script.js"></script>
+
     <!-- Google Analytics - Change UA-XXXXX-X to be your site's ID -->
     <script>
     window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
