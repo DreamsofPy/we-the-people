@@ -1,6 +1,7 @@
 import requests
 
 from apiclient.discovery import build
+from urllib2 import URLError
 
 API_KEY = 'AIzaSyDF8CmHI9LAKDuT7pOg3E-j9fsDnBWZ7A0'
 
@@ -8,8 +9,6 @@ API_KEY = 'AIzaSyDF8CmHI9LAKDuT7pOg3E-j9fsDnBWZ7A0'
 class Elections(object):
     """
     Google Civic Information API Client Library.
-
-    
     """
 
     def __init__(self):
@@ -26,8 +25,13 @@ class Elections(object):
         Use this to provide an `election_id` to `get_voter_info`.
         """
         request = self.collection.electionQuery()
-        response = request.execute()
-        return response
+
+        try:
+            response = request.execute()
+        except URLError:
+            response = {}
+
+        return response.get('elections', [])
 
     def get_voter_info(self, election_id, address):
         """
@@ -39,8 +43,13 @@ class Elections(object):
             electionId=election_id,
             body=body
         )
-        response = request.execute()
-        return response
+        
+        try:
+            response = request.execute()
+        except URLError:
+            response = {}
+
+        return response.get('contests', [])
 
 
 def bing_query(query, issue = None, top=6):
