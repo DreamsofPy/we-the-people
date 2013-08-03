@@ -5,6 +5,7 @@
 from flask import (Flask, render_template)
 import logging
 from logging import Formatter, FileHandler
+from .helpers import bing_query
 
 #------------------------------------------------------------------------------#
 # App Config
@@ -30,8 +31,10 @@ def login():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/candidate/<cadidate_name>")
-def candidate():
+@app.route("/candidate/<cadidate_name>", methods = ["POST"])
+def candidate(candidate_name, issue):
+    news = bing_query(candidate_name, issue)
+    context = {'news': news}
     return render_template("candidate.html")
 
 @app.route("/choose")
