@@ -2,40 +2,52 @@
 {% block title %} Democracy- Elections{% endblock %}
 {% block content %}
 
-<form  id="contests">
-  <select multiple class="form-control" id="elections" name="elections">
+<form  id="contests" action="{{url_for('candidate')}}" method="post">
+  <input type="hidden" value="{{election_id}}" id="eid">
+  <input type="hidden" value="{{address}}" id="address">
+  <select class="form-control" id="elections" name="elections">
+    <option selected ="selected" value="default">Select an office</option>
     {% for election in elections %}
-    <option>
+    {% if election.office %}
+    <option value="{{election.office}}">
       <label>{{ election.office }}</label>
     </option>
+    {% endif %}
     {% endfor %}
   </select>
+  <div class="candidates">
+
+  </div>
+  <br><br>
   <div class="checkbox-grid">
     <label class="checkbox-inline">
-      <input type="checkbox" value="immigration">
+      <input type="checkbox" value="immigration" class="issue">
         Immigration
     </label>
     <label class="checkbox-inline">
-      <input type="checkbox" value="economy">
+      <input type="checkbox" value="economy" class="issue">
         Economy
     </label>
     <label class="checkbox-inline">
-      <input type="checkbox" value="gun control">
+      <input type="checkbox" value="gun control" class="issue">
         Gun Control
     </label>
     <label class="checkbox-inline">
-      <input type="checkbox" value="abortion">
+      <input type="checkbox" value="abortion" class="issue">
         Abortion
     </label>
     <label class="checkbox-inline">
-      <input type="checkbox" value="energy">
+      <input type="checkbox" value="energy" class="issue">
         Energy
     </label>
     <label class="checkbox-inline">
-      <input type="checkbox" value="gay rights">
+      <input type="checkbox" value="gay rights" class="issue">
         Gay Rights
     </label>
   </div><br> <BR>
   <button type="Submit" class="btn btn-primary">Find</button>
 </form>
+<h3>New Results</h3>
+<div class="row"id="news-result">
+</div>
 {% endblock %}

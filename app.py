@@ -45,7 +45,7 @@ def elections():
     zipcode = request.values['zipcode']
     s = address + ' ' + zipcode
     contests = e.get_voter_info(election_id, s)
-    context = {'elections': contests}
+    context = {'elections': contests, 'election_id': election_id, 'address': s}
 
     return render_template("elections.html", **context)
 
@@ -108,11 +108,15 @@ def dashboard():
 
     return render_template("dashboard.html")
 
-@app.route("/candidate/<cadidate_name>", methods = ["POST"])
-def candidate(candidate_name):
-    news = bing_query(candidate_name, issue)
+@app.route("/candidate")
+def candidate():
+    print request.values
+    x = request.values
+    candidate_name = x['name']
+    issues = request.values['issues']
+    news = bing_query(candidate_name, issues)
     context = {'news': news}
-    return render_template("candidate.html")
+    return jsonify(**context)
 
 @app.route("/choose")
 def choose():
