@@ -1,36 +1,12 @@
-Democracy
-=========
+We The People
+=============
 
-####Routes
+This is project started for the [VIP Hackathon](http://viphackathon.eventbrite.com/) to
+solve the problem of awareness among the general public about local elections.
 
-/
+Our idea centers around issues and giving an unbiased look at how every candidate involved
+in the election feels about them.
 
-/elections
-
-/dashboard
-
-/candidate/<candidate-name>
-
-/choose
-
-/compare?id1&id2
-
-####Stuff to do
-Google civic api
-Bing News API
-Twilio
-Twitter-sentiment analysis
-
-####Explanation
-
-Index page with zip code
-
-choose elections(Federal, State, country, city)
-
-dashboard shows candidates
-
-candidate bio + news with issues
-
-
-
-
+#####Things to do
++ Complete candidate comparision
++ Integrate sentiment analysis
